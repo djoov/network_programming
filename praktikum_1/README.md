@@ -1,225 +1,96 @@
-# 🌐 Python TCP Client-Server Socket Programming
+# Praktikum 1: TCP Client-Server Sederhana
 
-[![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![Protocol](https://img.shields.io/badge/Protocol-TCP%2FIP-orange.svg)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
-[![Architecture](https://img.shields.io/badge/Architecture-Client--Server-success.svg)](#arsitektur-sistem)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
+Mata kuliah Network Programming. Dua program Python (hanya library standar) yang berkomunikasi lewat TCP: client mengirim pesan, server membalas.
 
-Repositori ini berisi implementasi fundamental pemrograman jaringan (*network programming*) menggunakan **Socket API** berbasis protokol **TCP (Transmission Control Protocol)** pada bahasa pemrograman Python. Proyek ini mencakup dua skenario implementasi: komunikasi teks sederhana (*plain text*) dan pertukaran data terstruktur (*structured payload*) menggunakan **JSON**.
+## Isi folder
 
-Proyek ini disusun sebagai bagian dari modul **Praktikum Pemrograman Jaringan (Network Programming)**.
-
----
-
-## 📑 Daftar Isi
-
-- [Fitur Utama](#-fitur-utama)
-- [Arsitektur Sistem](#-arsitektur-sistem)
-- [Struktur Direktori](#-struktur-direktori)
-- [Prasyarat Sistem](#-prasyarat-sistem)
-- [Panduan Menjalankan Program](#-panduan-menjalankan-program)
-  - [1. Versi Dasar (Plain Text)](#1-versi-dasar-plain-text)
-  - [2. Versi JSON (Data Terstruktur)](#2-versi-json-data-terstruktur)
-- [Konsep Jaringan yang Diterapkan](#-konsep-jaringan-yang-diterapkan)
-- [Troubleshooting & Penanganan Error](#-troubleshooting--penanganan-error)
-- [Kontributor](#-kontributor)
-
----
-
-## 🚀 Fitur Utama
-
-- **Zero External Dependencies**: Dibangun murni menggunakan *Python Standard Library* (`socket`, `json`, `datetime`), tanpa perlu instalasi `pip` tambahan.
-- **Dua Model Komunikasi**:
-  1. **Versi Dasar (`basic`)**: Pertukaran string mentah dengan balasan timestamp otomatis dari server.
-  2. **Versi Lanjutan (`json`)**: Pertukaran payload data multi-atribut terstruktur via serialisasi JSON.
-- **Socket Recycling**: Menggunakan opsi `SO_REUSEADDR` untuk mencegah penguncian port saat server di-restart (*TIME_WAIT bypass*).
-- **Graceful Shutdown**: Mekanisme penutupan koneksi dua arah secara tertib melalui instruksi `exit` (*Four-Way Handshake*).
-
----
-
-## 🏗 Arsitektur Sistem
-
-Komunikasi client-server dibangun di atas lapisan transport (Layer 4) dengan protokol **TCP** yang menjamin pengiriman data andal (*reliable*), terurut (*ordered*), dan *connection-oriented*.
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant Client as Client (client_json.py)
-    participant Server as Server (server_json.py)
-
-    Note over Server: socket() -> bind(127.0.0.1:5000) -> listen()
-    
-    rect rgb(240, 248, 255)
-    Note over Client,Server: TCP Three-Way Handshake
-    Client->>Server: SYN (Minta koneksi)
-    Server-->>Client: SYN + ACK
-    Client->>Server: ACK (Koneksi ESTABLISHED)
-    end
-
-    Note over Server: accept() mengembalikan objek socket baru
-
-    loop Sesi Komunikasi Data
-        Client->>Server: Request JSON: {"nama": "Jouvi", "pesan": "Halo"}
-        Note over Server: json.loads() -> Proses request & format waktu
-        Server-->>Client: Response JSON: {"status": "success", "waktu": "...", ...}
-        Note over Client: json.loads() -> Tampilkan output ke pengguna
-    end
-
-    rect rgb(255, 240, 245)
-    Note over Client,Server: TCP Four-Way Handshake (Ketik 'exit')
-    Client->>Server: FIN (Tutup koneksi)
-    Server-->>Client: ACK
-    Server-->>Client: FIN
-    Client->>Server: ACK
-    end
-
-    Note over Client,Server: Socket Ditutup (CLOSED)
-```
-
----
-
-## 📁 Struktur Direktori
-
-```text
-praktikum_1/
-├── server_basic.py     # Server TCP dasar (Plain text & timestamp generator)
-├── client_basic.py     # Client TCP dasar
-├── server_json.py      # Server TCP dengan dukungan serialisasi JSON & SO_REUSEADDR
-├── client_json.py      # Client TCP dengan pengiriman payload JSON interaktif
-├── kerangka_laporan.md # Laporan komprehensif & analisis teknis praktikum
-├── TEST_RESULT.txt     # Log hasil uji coba integrasi modul JSON
-├── README.txt          # Catatan petunjuk ringkas asli
-└── README.md           # Dokumentasi publik repositori (berkas ini)
-```
-
----
-
-## 💻 Prasyarat Sistem
-
-- **Python**: Versi `3.8` atau yang lebih baru (diuji pada Python 3.12 dan 3.14).
-- **Sistem Operasi**: Windows, Linux, atau macOS (kode socket bersifat *cross-platform*).
-- **Terminal**: Disarankan menggunakan minimal dua jendela terminal / PowerShell / tab terminal VS Code.
-
----
-
-## 📖 Panduan Menjalankan Program
-
-Setiap versi membutuhkan **dua jendela terminal**: satu untuk menjalankan server dan satu lagi untuk client.
-
-### 1. Versi Dasar (Plain Text)
-
-#### Langkah 1: Jalankan Server
-Buka terminal pertama dan ketik:
-```bash
-python server_basic.py
-```
-*Output Terminal Server:*
-```text
-Server berjalan di 127.0.0.1:5000
-Menunggu koneksi client...
-```
-
-#### Langkah 2: Jalankan Client
-Buka terminal kedua dan ketik:
-```bash
-python client_basic.py
-```
-*Output Terminal Client:*
-```text
-Terhubung ke server 127.0.0.1:5000
-Ketik pesan. Ketik 'exit' untuk keluar.
-Client: Halo Server
-Server: 2026-09-16 10:30:15
-Client: exit
-Client berhenti.
-```
-
----
-
-### 2. Versi JSON (Data Terstruktur)
-
-> [!IMPORTANT]
-> Pastikan server versi dasar telah dimatikan terlebih dahulu (`Ctrl + C` atau ketik `exit`) agar port `5000` tidak bentrok.
-
-#### Langkah 1: Jalankan Server JSON
-Buka terminal pertama:
-```bash
-python server_json.py
-```
-*Output Terminal Server:*
-```text
-Server JSON berjalan di 127.0.0.1:5000
-Menunggu koneksi client...
-```
-
-#### Langkah 2: Jalankan Client JSON
-Buka terminal kedua:
-```bash
-python client_json.py
-```
-
-*Interaksi pada Client:*
-```text
-Terhubung ke server 127.0.0.1:5000
-Format: nama dan pesan. Ketik 'exit' pada pesan untuk keluar.
-Nama: Jouvi
-Pesan: Halo Server
-Server: {'status': 'success', 'nama': 'Jouvi', 'pesan': 'Halo Server', 'tanggal': '2026-09-16', 'waktu': '10:32:00'}
-
-Nama: Jouvi
-Pesan: exit
-Server: {'status': 'success', 'pesan': 'Koneksi ditutup oleh client.'}
-Client berhenti.
-```
-
----
-
-## 🧠 Konsep Jaringan yang Diterapkan
-
-| Konsep | Penjelasan pada Program |
+| File | Fungsi |
 |---|---|
-| **Socket Endpoint** | Ditentukan oleh pasangan `(IP, Port)` yaitu `('127.0.0.1', 5000)`. |
-| **`AF_INET` & `SOCK_STREAM`** | `AF_INET` menggunakan pengalamatan IPv4, sedangkan `SOCK_STREAM` memilih protokol transmisi TCP yang andal dan berurutan. |
-| **Blocking Call** | Pemanggilan `accept()` dan `recv()` akan memblokir thread eksekusi hingga data atau permintaan koneksi tiba. |
-| **Encoding / Decoding** | Socket hanya dapat mengirimkan aliran biner (*raw bytes*). Karena itu string dikonversi melalui `.encode('utf-8')` sebelum dikirim dan `.decode('utf-8')` setelah diterima. |
-| **Data Framing** | TCP memperlakukan data sebagai *byte stream* tanpa batas pesan (*no message boundary*). Penggunaan JSON memudahkan rekonstruksi batas data objek pada sisi penerima. |
+| `server.py` | Mendengarkan koneksi di sebuah port, menerima pesan, membalas |
+| `client.py` | Terhubung ke server, mengirim pesan dari keyboard, mencetak balasan |
+| `catatan_laporan.md` | Kerangka isi laporan, dipetakan ke poin-poin dari slide sesi 2 |
 
----
+## Arsitektur
 
-## 🛠 Troubleshooting & Penanganan Error
+```
+Client                                   Server
+------                                   ------
+socket()                                 socket()
+                                         bind(ip, port)
+                                         listen()
+connect(ip, port)  ---- handshake --->   accept()   (menunggu di sini)
+sendall("halo")    ---- pesan ------->   recv()
+recv()             <--- balasan ------   sendall("Server menerima: halo")
+close()            ---- FIN -------->    recv() -> b""  (tanda client selesai)
+```
 
-### 1. `OSError: [WinError 10048] Only one usage of each socket address is normally permitted`
-* **Penyebab:** Port `5000` masih terkunci karena server sebelumnya belum dihentikan atau masih berjalan di background.
-* **Solusi di Windows (PowerShell):**
-  ```powershell
-  # 1. Cari PID proses yang memakai port 5000
-  Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue
+## Cara menjalankan
 
-  # 2. Hentikan proses berdasarkan PID yang ditemukan (misal: 9772)
-  Stop-Process -Id <PID> -Force
-  ```
-* **Solusi di Linux / macOS:**
-  ```bash
-  lsof -i :5000
-  kill -9 <PID>
-  ```
+Butuh Python 3.10 atau lebih baru. Buka dua terminal di folder ini.
 
-### 2. `ConnectionRefusedError: [WinError 10061]`
-* **Penyebab:** Client dijalankan sebelum server aktif atau alamat target salah.
-* **Solusi:** Pastikan `server_basic.py` atau `server_json.py` sudah berstatus `Menunggu koneksi client...` sebelum menjalankan skrip client.
+Terminal 1:
+```
+python server.py
+```
 
-### 3. `ConnectionResetError: [WinError 10054]`
-* **Penyebab:** Client dimatikan secara mendadak (*crash* / jendela terminal langsung ditutup) sehingga sistem operasi mengirimkan paket **TCP RST**.
-* **Solusi:** Tutup koneksi secara tertib dengan mengetik perintah `exit`.
+Terminal 2:
+```
+python client.py
+```
 
----
+Ketik pesan lalu Enter. Ketik `exit` untuk keluar. Server tetap hidup dan siap menerima client berikutnya.
 
-## 👤 Kontributor
+IP dan port bisa diganti:
+```
+python server.py --host 127.0.0.1 --port 6000
+python client.py --host 127.0.0.1 --port 6000
+```
 
-- **Nama:** Nur Akhmad Van Jouvi
-- **NIM:** 2314000024
-- **Mata Kuliah:** Network Programming
-- **Dosen Pengampu:** Dr. Hadi Syahrial, S.Si., M.M., M.Kom.
+Contoh output client:
+```
+Terhubung ke 127.0.0.1:5000
+Pesan (ketik 'exit' untuk keluar): halo server
+Balasan: Server menerima: halo server
+```
 
----
-*Dibuat untuk tujuan edukasi dan pemahaman praktis jaringan komputer.*
+## Skenario pengujian
+
+Semua skenario di bawah sudah diuji, hasil yang diharapkan ada di kolom kanan.
+
+| # | Skenario | Cara | Hasil yang diharapkan |
+|---|---|---|---|
+| 1 | Normal | Kirim beberapa pesan, lalu `exit` | Setiap pesan dibalas, server mencatat "menutup koneksi" |
+| 2 | Pesan kosong | Tekan Enter tanpa mengetik | Client menolak, tidak ada yang dikirim |
+| 3 | Server mati | Jalankan client tanpa server | "Gagal terhubung ... server belum jalan atau port salah" |
+| 4 | Port salah | `python client.py --port 9999` | Pesan yang sama dengan skenario 3 |
+| 5 | Host salah | `python client.py --host salah.invalid` | "Alamat ... tidak dikenali" |
+| 6 | Port bentrok | Jalankan dua server di port yang sama | "Gagal bind ... Address already in use" |
+| 7 | Client berpindah | Client 1 `exit`, lalu jalankan client 2 | Server melayani client 2 tanpa restart |
+| 8 | Client mati mendadak | Tutup jendela terminal client (jangan ketik `exit`) | Server mencatat terputus mendadak, atau koneksi ditutup. Hasilnya bisa berbeda antar OS, catat apa yang kamu lihat |
+| 9 | Server mati saat client aktif | Ctrl+C di server, lalu kirim pesan dari client | Client menampilkan koneksi terputus atau server menutup koneksi |
+| 10 | Pesan lebih dari 1024 byte | Tempel teks yang sangat panjang di client | Server membacanya dalam beberapa potongan |
+
+## Kenapa kodenya begini
+
+- **`with socket...` dan `with conn`**: socket otomatis ditutup walau terjadi error, jadi tidak ada yang bocor.
+- **`if not data`**: `recv()` yang mengembalikan `b""` adalah satu-satunya tanda client menutup koneksi. Tanpa ini server berputar tanpa henti.
+- **`SO_REUSEADDR`**: supaya server bisa di-restart langsung tanpa error "Address already in use" akibat status TIME_WAIT.
+- **`sendall()` bukan `send()`**: `send()` boleh mengirim sebagian data saja, `sendall()` mengulang sampai semua terkirim.
+- **`timeout` di client**: supaya client tidak menunggu selamanya kalau server diam.
+- **`except ConnectionError`**: satu kelas induk yang menangkap beberapa error koneksi sekaligus (reset, broken pipe, dst).
+
+## Keterbatasan yang disengaja
+
+Server ini melayani satu client dalam satu waktu. Selama server sibuk dengan client 1, client 2 hanya menunggu di antrean `listen()` (backlog). Ini sengaja dibiarkan supaya perilaku `accept()` yang blocking bisa diamati langsung, dan menjadi alasan kenapa praktikum multi client butuh thread.
+
+TCP juga tidak menjaga batas pesan. Satu `recv()` bisa mendapat potongan pesan atau gabungan dua pesan. Program ini aman karena pesannya pendek dan dikirim satu per satu, tapi untuk protokol yang serius perlu aturan batas pesan (misalnya diakhiri newline atau diawali panjang pesan).
+
+## Kalau nanti ingin dikembangkan
+
+- Message framing: pesan diakhiri `\n`, atau diawali 4 byte panjang pesan.
+- Banyak client sekaligus dengan `threading` (praktikum multi client).
+- Library `logging` sebagai pengganti `print` untuk log.
+
+## Catatan Windows
+
+Kalau Ctrl+C tidak langsung menghentikan server saat sedang menunggu di `accept()`, itu perilaku Windows. Tekan Ctrl+Break, atau sambungkan satu client lalu tutup. Firewall Windows mungkin menampilkan popup saat server pertama kali jalan, pilih Allow.

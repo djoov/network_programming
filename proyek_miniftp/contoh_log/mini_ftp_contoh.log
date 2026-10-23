@@ -1,0 +1,68 @@
+2026-10-23 14:19:52,218 | INFO    | SERVER_START alamat=127.0.0.1:21299 root="server_files" log="logs/mini_ftp.log"
+2026-10-23 14:19:53,205 | INFO    | SESSION_START sid=1 client=127.0.0.1:52780
+2026-10-23 14:19:53,205 | INFO    | CMD sid=1 cmd=HELP arg=-
+2026-10-23 14:19:53,206 | INFO    | CMD sid=1 cmd=LIST arg=-
+2026-10-23 14:19:53,249 | INFO    | CMD sid=1 cmd=GET arg="halo.txt"
+2026-10-23 14:19:53,249 | INFO    | TRANSFER_START sid=1 op=GET file=halo.txt bytes=53
+2026-10-23 14:19:53,249 | INFO    | TRANSFER_OK sid=1 op=GET file=halo.txt bytes=53 detik=0.000
+2026-10-23 14:19:53,293 | INFO    | CMD sid=1 cmd=GET arg="catatan.txt"
+2026-10-23 14:19:53,293 | INFO    | TRANSFER_START sid=1 op=GET file=catatan.txt bytes=135
+2026-10-23 14:19:53,294 | INFO    | TRANSFER_OK sid=1 op=GET file=catatan.txt bytes=135 detik=0.000
+2026-10-23 14:19:53,337 | INFO    | CMD sid=1 cmd=GET arg="halo.txt"
+2026-10-23 14:19:53,337 | INFO    | TRANSFER_START sid=1 op=GET file=halo.txt bytes=53
+2026-10-23 14:19:53,337 | INFO    | TRANSFER_OK sid=1 op=GET file=halo.txt bytes=53 detik=0.000
+2026-10-23 14:19:53,381 | INFO    | CMD sid=1 cmd=QUIT arg=-
+2026-10-23 14:19:53,384 | INFO    | SESSION_END sid=1 client=127.0.0.1:52780 durasi=0.18s perintah=6 status=normal
+2026-10-23 14:19:53,735 | INFO    | SESSION_START sid=2 client=127.0.0.1:52786
+2026-10-23 14:19:53,735 | INFO    | CMD sid=2 cmd=LIST arg=-
+2026-10-23 14:19:53,735 | INFO    | CMD sid=2 cmd=GET arg="halo.txt"
+2026-10-23 14:19:53,735 | INFO    | TRANSFER_START sid=2 op=GET file=halo.txt bytes=53
+2026-10-23 14:19:53,736 | INFO    | TRANSFER_OK sid=2 op=GET file=halo.txt bytes=53 detik=0.000
+2026-10-23 14:19:53,778 | INFO    | CMD sid=2 cmd=GET arg="jadwal.csv"
+2026-10-23 14:19:53,778 | INFO    | TRANSFER_START sid=2 op=GET file=jadwal.csv bytes=71
+2026-10-23 14:19:53,778 | INFO    | TRANSFER_OK sid=2 op=GET file=jadwal.csv bytes=71 detik=0.000
+2026-10-23 14:19:53,821 | INFO    | CMD sid=2 cmd=GET arg="data_200kb.bin"
+2026-10-23 14:19:53,821 | INFO    | TRANSFER_START sid=2 op=GET file=data_200kb.bin bytes=204800
+2026-10-23 14:19:53,822 | INFO    | TRANSFER_OK sid=2 op=GET file=data_200kb.bin bytes=204800 detik=0.001
+2026-10-23 14:19:53,822 | INFO    | CMD sid=2 cmd=PUT arg="laporan_baru.txt 880"
+2026-10-23 14:19:53,822 | INFO    | TRANSFER_START sid=2 op=PUT file=laporan_baru.txt bytes=880
+2026-10-23 14:19:53,823 | INFO    | TRANSFER_OK sid=2 op=PUT file=laporan_baru.txt bytes=880 detik=0.000
+2026-10-23 14:19:53,823 | INFO    | CMD sid=2 cmd=QUIT arg=-
+2026-10-23 14:19:53,823 | INFO    | SESSION_END sid=2 client=127.0.0.1:52786 durasi=0.09s perintah=6 status=normal
+2026-10-23 14:19:54,314 | INFO    | SESSION_START sid=3 client=127.0.0.1:52792
+2026-10-23 14:19:54,321 | INFO    | CMD sid=3 cmd=GET arg="catatan.txt"
+2026-10-23 14:19:54,322 | INFO    | TRANSFER_START sid=3 op=GET file=catatan.txt bytes=135
+2026-10-23 14:19:54,324 | INFO    | TRANSFER_OK sid=3 op=GET file=catatan.txt bytes=135 detik=0.002
+2026-10-23 14:19:54,325 | INFO    | CMD sid=3 cmd=GET arg="laporan.txt"
+2026-10-23 14:19:54,325 | INFO    | TRANSFER_START sid=3 op=GET file=laporan.txt bytes=117
+2026-10-23 14:19:54,325 | INFO    | TRANSFER_OK sid=3 op=GET file=laporan.txt bytes=117 detik=0.000
+2026-10-23 14:19:54,370 | INFO    | CMD sid=3 cmd=GET arg="tidak_ada.txt"
+2026-10-23 14:19:54,372 | WARNING | CMD_FAIL sid=3 cmd=GET kode=404 pesan="file tidak ditemukan"
+2026-10-23 14:19:54,373 | INFO    | CMD sid=3 cmd=GET arg="../rahasia.txt"
+2026-10-23 14:19:54,373 | WARNING | CMD_FAIL sid=3 cmd=GET kode=403 pesan="nama file tidak diizinkan"
+2026-10-23 14:19:54,373 | INFO    | CMD sid=3 cmd=GET arg="halo.txt"
+2026-10-23 14:19:54,374 | INFO    | TRANSFER_START sid=3 op=GET file=halo.txt bytes=53
+2026-10-23 14:19:54,374 | INFO    | TRANSFER_OK sid=3 op=GET file=halo.txt bytes=53 detik=0.000
+2026-10-23 14:19:54,418 | INFO    | CMD sid=3 cmd=QUIT arg=-
+2026-10-23 14:19:54,418 | INFO    | SESSION_END sid=3 client=127.0.0.1:52792 durasi=0.11s perintah=6 status=normal
+2026-10-23 14:19:54,790 | INFO    | SESSION_START sid=4 client=127.0.0.1:52796
+2026-10-23 14:19:54,790 | INFO    | CMD sid=4 cmd=GET arg="besar_20mb.bin"
+2026-10-23 14:19:54,790 | INFO    | TRANSFER_START sid=4 op=GET file=besar_20mb.bin bytes=20971520
+2026-10-23 14:19:54,792 | ERROR   | TRANSFER_FAIL sid=4 op=GET file=besar_20mb.bin bytes=2490368 dari=20971520 alasan="ConnectionResetError: [Errno 104] Connection reset by peer"
+2026-10-23 14:19:54,793 | INFO    | SESSION_END sid=4 client=127.0.0.1:52796 durasi=0.00s perintah=1 status=terputus
+2026-10-23 14:19:54,793 | INFO    | SESSION_START sid=5 client=127.0.0.1:52802
+2026-10-23 14:19:54,793 | INFO    | CMD sid=5 cmd=LIST arg=-
+2026-10-23 14:19:54,794 | INFO    | CMD sid=5 cmd=QUIT arg=-
+2026-10-23 14:19:54,794 | INFO    | SESSION_END sid=5 client=127.0.0.1:52802 durasi=0.00s perintah=2 status=normal
+2026-10-23 14:19:55,155 | INFO    | SESSION_START sid=6 client=127.0.0.1:52810
+2026-10-23 14:19:55,156 | INFO    | CMD sid=6 cmd=GET arg="data_200kb.bin"
+2026-10-23 14:19:55,156 | INFO    | TRANSFER_START sid=6 op=GET file=data_200kb.bin bytes=204800
+2026-10-23 14:19:55,156 | INFO    | TRANSFER_OK sid=6 op=GET file=data_200kb.bin bytes=204800 detik=0.000
+2026-10-23 14:19:55,157 | INFO    | CMD sid=6 cmd=GET arg="readme.txt"
+2026-10-23 14:19:55,157 | INFO    | TRANSFER_START sid=6 op=GET file=readme.txt bytes=51
+2026-10-23 14:19:55,157 | INFO    | TRANSFER_OK sid=6 op=GET file=readme.txt bytes=51 detik=0.000
+2026-10-23 14:19:55,201 | INFO    | CMD sid=6 cmd=GET arg="catatan.txt"
+2026-10-23 14:19:55,201 | INFO    | TRANSFER_START sid=6 op=GET file=catatan.txt bytes=135
+2026-10-23 14:19:55,201 | INFO    | TRANSFER_OK sid=6 op=GET file=catatan.txt bytes=135 detik=0.000
+2026-10-23 14:19:55,245 | INFO    | CMD sid=6 cmd=QUIT arg=-
+2026-10-23 14:19:55,248 | INFO    | SESSION_END sid=6 client=127.0.0.1:52810 durasi=0.09s perintah=4 status=normal

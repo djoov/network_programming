@@ -1,0 +1,35 @@
+==================================================================
+LAPORAN LOG MINI-FTP
+==================================================================
+File dibaca : mini_ftp_contoh.log
+Rentang waktu: 2026-10-23 14:19:52  s.d.  2026-10-23 14:19:55
+
+1. JUMLAH SESI FTP
+   Sesi tercatat (SESSION_START) : 6
+   Sesi selesai  (SESSION_END)   : 6
+   Belum tercatat selesai        : 0
+     status normal    : 5
+     status terputus  : 1
+   Perintah diterima: GET=15, HELP=1, LIST=3, PUT=1, QUIT=5
+
+2. LIMA FILE PALING SERING DIUNDUH (hanya unduhan yang berhasil)
+   No  File                          Diunduh     Total byte
+   1   halo.txt                           4x            212
+   2   catatan.txt                        3x            405
+   3   data_200kb.bin                     2x         409600
+   4   jadwal.csv                         1x             71
+   5   laporan.txt                        1x            117
+
+3. TOTAL BYTE YANG DITRANSFER (transfer yang selesai)
+   Unduh (GET) :       410456 byte  dari 12 transfer
+   Unggah (PUT):          880 byte  dari 1 transfer
+   TOTAL       :       411336 byte  (401.70 KB)
+   Byte parsial dari 1 transfer gagal (tidak dihitung di atas): 2490368 byte
+
+4. DAFTAR ERROR (level ERROR): 1
+   2026-10-23 14:19:54  TRANSFER_FAIL  sid=4 op=GET file=besar_20mb.bin bytes=2490368 dari=20971520 alasan="ConnectionResetError: [Errno 104] Connection reset by peer"
+
+   Operasi ditolak/gagal (level WARNING): 2
+   2026-10-23 14:19:54  CMD_FAIL  sid=3 cmd=GET kode=404 pesan="file tidak ditemukan"
+   2026-10-23 14:19:54  CMD_FAIL  sid=3 cmd=GET kode=403 pesan="nama file tidak diizinkan"
+==================================================================

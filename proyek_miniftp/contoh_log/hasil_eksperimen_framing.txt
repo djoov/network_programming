@@ -1,0 +1,15 @@
+Isi file di server (32 byte): b'baris satu\nbaris dua\nbaris tiga\n'
+
+A. Satu recv() setelah GET:
+   diterima 52 byte sekaligus: b'OK 32 mengirim file\nbaris satu\nbaris dua\nbaris tiga\n'
+   Header dan isi file menyatu. Tanpa panjang dari header, client tidak tahu
+   di mana respons berakhir dan data file dimulai.
+
+B. Client membaca body kurang 10 byte, lalu mengirim LIST dan membaca header balasan:
+   diharapkan baris 'OK <n> ...', yang terbaca: b'aris tiga\n'
+   Sisa 10 byte data file dianggap awal balasan LIST. Sejak ini seluruh sesi kacau.
+
+C. Client membaca data file sampai newline pertama:
+   terbaca b'baris satu\n' (hanya 11 dari 32 byte)
+   File terpotong tanpa error apa pun. Data biner yang kebetulan memuat byte newline
+   akan rusak dengan cara yang sama.

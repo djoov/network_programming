@@ -1,0 +1,31 @@
+== Uji protokol dan logging ==
+[PASS] 1  koneksi dan HELP
+[PASS] 2  LIST menampilkan file  (3 file)
+[PASS] 3  GET file kecil sama persis
+[PASS] 4  GET file tidak ada -> ERR 404  (file tidak ditemukan)
+[PASS] 5  nama file berbahaya ditolak (403)
+[PASS] 6  perintah asing -> ERR 400, sesi lanjut
+[PASS] 7  PUT 300 KB lalu GET kembali identik
+[PASS] 8  PUT terlalu besar -> ERR 413, sesi tetap sinkron
+[PASS] 9  dua perintah beruntun, dua frame terpisah benar
+[PASS] 10 isi file mirip header tidak menggeser frame  (10273 byte dibaca tepat)
+[PASS] 11 LIST yang dikirim saat GET berjalan baru dibalas setelah file selesai
+[PASS] 12 QUIT dibalas dan koneksi ditutup server
+[PASS] 13 server mencatat TRANSFER_FAIL saat client memutus transfer
+[PASS] 14 dua client mengunduh 30 MB bersamaan
+[PASS] 15 putus tanpa QUIT -> SESSION_END status=terputus
+[PASS] 16 tidak ada file .part tersisa
+[PASS] L  log berisi SESSION_START
+[PASS] L  log berisi SESSION_END
+[PASS] L  log berisi CMD
+[PASS] L  log berisi TRANSFER_OK
+[PASS] L  log berisi TRANSFER_FAIL
+[PASS] L  log berisi CMD_FAIL
+[PASS] L  log berisi SERVER_START
+== Uji rotasi log (14000 sesi) ==
+   ukuran file log: {'utama': 409872, '.1': 1048534, '.2': 1048552, '.3': 1048498}
+[PASS] R1 file log berotasi: utama, .1, .2, .3 ada
+[PASS] R2 tidak ada .4 (hanya 3 file lama disimpan)
+[PASS] R3 tiap file log tidak melebihi 1 MB
+
+Hasil: 26 dari 26 pemeriksaan lulus

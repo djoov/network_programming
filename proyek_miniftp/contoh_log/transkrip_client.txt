@@ -1,0 +1,97 @@
+##### Sesi 1: bantuan, daftar file, unduh halo dua kali
+$ python mini_ftp_client.py --port 21299
+Terhubung ke 127.0.0.1:21299. Ketik 'help' untuk bantuan, 'quit' untuk keluar.
+miniftp> help
+HELP                     daftar perintah
+LIST                     daftar file di server
+GET <file>               unduh file
+PUT <file> <ukuran>      unggah file
+QUIT                     keluar
+miniftp> ls
+7 file:
+  besar_20mb.bin                     20971520 byte
+  catatan.txt                             135 byte
+  data_200kb.bin                       204800 byte
+  halo.txt                                 53 byte
+  jadwal.csv                               71 byte
+  laporan.txt                             117 byte
+  readme.txt                               51 byte
+miniftp> get halo.txt
+[OK] halo.txt: 53 byte disimpan di unduhan/halo.txt
+miniftp> get catatan.txt
+[OK] catatan.txt: 135 byte disimpan di unduhan/catatan.txt
+miniftp> get halo.txt
+[OK] halo.txt: 53 byte disimpan di unduhan/halo.txt
+miniftp> quit
+[OK] sampai jumpa
+
+##### Sesi 2: unduh tiga file lalu unggah satu file
+$ python mini_ftp_client.py --port 21299
+Terhubung ke 127.0.0.1:21299. Ketik 'help' untuk bantuan, 'quit' untuk keluar.
+miniftp> ls
+7 file:
+  besar_20mb.bin                     20971520 byte
+  catatan.txt                             135 byte
+  data_200kb.bin                       204800 byte
+  halo.txt                                 53 byte
+  jadwal.csv                               71 byte
+  laporan.txt                             117 byte
+  readme.txt                               51 byte
+miniftp> get halo.txt
+[OK] halo.txt: 53 byte disimpan di unduhan/halo.txt
+miniftp> get jadwal.csv
+[OK] jadwal.csv: 71 byte disimpan di unduhan/jadwal.csv
+miniftp> get data_200kb.bin
+[OK] data_200kb.bin: 204800 byte disimpan di unduhan/data_200kb.bin
+miniftp> put laporan_baru.txt
+[OK] laporan_baru.txt: 880 byte terkirim (tersimpan)
+miniftp> quit
+[OK] sampai jumpa
+
+##### Sesi 3: file tidak ada, nama berbahaya, perintah asing
+$ python mini_ftp_client.py --port 21299
+Terhubung ke 127.0.0.1:21299. Ketik 'help' untuk bantuan, 'quit' untuk keluar.
+miniftp> get catatan.txt
+[OK] catatan.txt: 135 byte disimpan di unduhan/catatan.txt
+miniftp> get laporan.txt
+[OK] laporan.txt: 117 byte disimpan di unduhan/laporan.txt
+miniftp> get tidak_ada.txt
+[ERR 404] file tidak ditemukan
+miniftp> get ../rahasia.txt
+[ERR 403] nama file tidak diizinkan
+miniftp> get halo.txt
+[OK] halo.txt: 53 byte disimpan di unduhan/halo.txt
+miniftp> quit
+[OK] sampai jumpa
+
+##### Sesi 4: batalkan unduhan file besar (koneksi diputus lalu sesi baru)
+$ python mini_ftp_client.py --port 21299
+Terhubung ke 127.0.0.1:21299. Ketik 'help' untuk bantuan, 'quit' untuk keluar.
+miniftp> get besar_20mb.bin --batal 512
+
+[BATAL] besar_20mb.bin: 524288 dari 20971520 byte diterima. Koneksi ditutup.
+[INFO] Koneksi baru dibuat (sesi baru di server).
+miniftp> ls
+8 file:
+  besar_20mb.bin                     20971520 byte
+  catatan.txt                             135 byte
+  data_200kb.bin                       204800 byte
+  halo.txt                                 53 byte
+  jadwal.csv                               71 byte
+  laporan.txt                             117 byte
+  laporan_baru.txt                        880 byte
+  readme.txt                               51 byte
+miniftp> quit
+[OK] sampai jumpa
+
+##### Sesi 5: unduh tiga file
+$ python mini_ftp_client.py --port 21299
+Terhubung ke 127.0.0.1:21299. Ketik 'help' untuk bantuan, 'quit' untuk keluar.
+miniftp> get data_200kb.bin
+[OK] data_200kb.bin: 204800 byte disimpan di unduhan/data_200kb.bin
+miniftp> get readme.txt
+[OK] readme.txt: 51 byte disimpan di unduhan/readme.txt
+miniftp> get catatan.txt
+[OK] catatan.txt: 135 byte disimpan di unduhan/catatan.txt
+miniftp> quit
+[OK] sampai jumpa

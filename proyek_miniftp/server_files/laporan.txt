@@ -1,0 +1,4 @@
+Laporan sementara praktikum jaringan.
+Bagian 1: analisis kode.
+Bagian 2: logging.
+Bagian 3: FTP standar vs Mini-FTP.

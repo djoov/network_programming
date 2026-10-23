@@ -1,0 +1,17 @@
+# Soal dan laporan UTS (tidak ikut ke GitHub)
+Soal UTS.pdf
+Laporan_Analisis_MiniFTP.docx
+proyek_miniftp/Laporan_Analisis_MiniFTP.docx
+
+# Materi dosen (bukan karya sendiri)
+PRAKTIKUM NETWORK PROGRAMMING 3.pdf
+Praktikum_Network_Programming_Multi Client.pdf
+Slides materi sesi 2.pptx
+Slides sesi 1.pptx
+
+# Hasil menjalankan program, bukan source code
+__pycache__/
+*.pyc
+logs/
+unduhan/
+server_files/besar_*.bin

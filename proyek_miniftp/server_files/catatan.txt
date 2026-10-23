@@ -1,0 +1,4 @@
+Catatan Network Programming
+1. TCP adalah stream
+2. Framing menentukan batas pesan
+3. Satu koneksi membawa perintah, respons, dan data
